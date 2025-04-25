@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom"; // Import Link for navigat
 import "../assets/styles/Login.css"; // Import scoped CSS for Login page
 
 // --- ★ API URL Defined Directly In File ★ ---
-const API_BASE_URL = "http://localhost:3000"; // Replace if needed
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000"; // Replace if needed
 
 // Component receives setIsLoggedIn function from parent (e.g., App.js)
 const Login = ({ setIsLoggedIn }) => {

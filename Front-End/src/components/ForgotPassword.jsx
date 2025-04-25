@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../assets/styles/AuthForms.css'; // Ensure this shared CSS file is imported
 
 // API Base URL (Defined Directly - Consistent)
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');

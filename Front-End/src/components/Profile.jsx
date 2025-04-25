@@ -8,6 +8,12 @@ import defaultUserIcon from "../assets/images/user-icon.png";
 // ★ Import Confirmation Dialog
 import ConfirmationDialog from './ConfirmationDialog';
 
+// --- ADDED --- Get API Base URL from Environment Variable ---
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+// Optional: Log the URL being used for debugging
+console.log(`[Profile] Using API Base URL: ${API_BASE_URL}`);
+// --- END ADDED ---
+
 const Profile = ({ setIsLoggedIn }) => {
   // --- State for Displayed Data ---
   const [userData, setUserData] = useState({
@@ -41,8 +47,6 @@ const Profile = ({ setIsLoggedIn }) => {
   // --- Fetch Profile Data ---
   useEffect(() => {
     const fetchProfile = async () => {
-      // ... (Keep existing fetchProfile logic exactly as you provided) ...
-      // Ensure it initializes both `userData` and `editData`
        setError('');
       setIsLoading(true);
       const token = localStorage.getItem('token');
@@ -56,9 +60,11 @@ const Profile = ({ setIsLoggedIn }) => {
       }
 
       try {
-        const response = await axios.get('http://localhost:3000/api/user', {
+        // --- CHANGED --- Use API_BASE_URL variable ---
+        const response = await axios.get(`${API_BASE_URL}/api/user`, {
           headers: { Authorization: `Bearer ${token}` }
         });
+        // --- END CHANGED ---
 
         const fetchedData = response.data;
         console.log("Profile data fetched:", fetchedData);
@@ -103,16 +109,13 @@ const Profile = ({ setIsLoggedIn }) => {
     };
 
     fetchProfile();
-  }, [navigate, setIsLoggedIn]);
+  }, [navigate, setIsLoggedIn]); // Keep dependencies
 
   // --- Cleanup Object URL ---
   useEffect(() => {
-      // Revoke the object URL if it exists and starts with 'blob:' when the component unmounts
-      // or when the selectedFile changes (meaning a new preview URL might be generated)
        let currentPreview = imagePreviewUrl;
       return () => {
           if (currentPreview && typeof currentPreview === 'string' && currentPreview.startsWith('blob:')) {
-              // console.log("Revoking blob URL:", currentPreview);
               URL.revokeObjectURL(currentPreview);
           }
       };
@@ -131,7 +134,6 @@ const Profile = ({ setIsLoggedIn }) => {
 
   const handleEditClose = () => {
     setEditMode(false);
-    // No need to revoke here, useEffect cleanup handles it
   };
 
   // --- Form Input Handlers ---
@@ -145,14 +147,11 @@ const Profile = ({ setIsLoggedIn }) => {
           if (file.size > 5 * 1024 * 1024) { // 5MB limit
               setUpdateMessage("❌ File is too large (Max 5MB).");
               setSelectedFile(null);
-              // Don't reset preview here, keep the old one
               if (fileInputRef.current) fileInputRef.current.value = null; // Reset file input
               return;
           }
           setSelectedFile(file);
-          // ★ Create and set preview URL
           const previewUrl = URL.createObjectURL(file);
-          // Revoke previous blob URL if it exists before setting the new one
            if (imagePreviewUrl && typeof imagePreviewUrl === 'string' && imagePreviewUrl.startsWith('blob:')) {
                URL.revokeObjectURL(imagePreviewUrl);
            }
@@ -161,26 +160,19 @@ const Profile = ({ setIsLoggedIn }) => {
           setUpdateMessage('');
       } else {
           setSelectedFile(null);
-          // Optionally revert preview if file selection is cancelled?
-          // setImagePreviewUrl(userData.photo || defaultUserIcon);
       }
   };
 
   // --- Photo Removal Logic ---
-
-  // ★ Step 1: User clicks "Remove Photo" button -> Show Confirmation Dialog
   const handleRequestRemovePhoto = useCallback(() => {
-    // Don't show if already default or dialog is open
     if (isPhotoMarkedForRemoval || imagePreviewUrl === defaultUserIcon || confirmationState.isOpen) return;
-
     setConfirmationState({
         isOpen: true,
         message: "Are you sure you want to remove your profile photo?",
-        actionType: 'removePhoto', // Identify the action
+        actionType: 'removePhoto',
     });
   }, [isPhotoMarkedForRemoval, imagePreviewUrl, confirmationState.isOpen]);
 
-  // ★ Step 2: User confirms in the dialog -> Update state for removal intent
   const confirmPhotoRemoval = useCallback(() => {
     console.log("User confirmed photo removal.");
     setImagePreviewUrl(defaultUserIcon); // Show default in preview
@@ -190,7 +182,6 @@ const Profile = ({ setIsLoggedIn }) => {
      if (fileInputRef.current) fileInputRef.current.value = null; // Reset file input visually
   }, []);
 
-  // ★ Step 3: User cancels dialog
   const cancelConfirmation = useCallback(() => {
     console.log("User cancelled action.");
     setConfirmationState({ isOpen: false, message: '', actionType: null });
@@ -204,14 +195,18 @@ const Profile = ({ setIsLoggedIn }) => {
       setIsUploading(false); // Reset upload state
 
       const token = localStorage.getItem('token');
-      if (!token) { /* ... handle auth error ... */ return; }
+      if (!token) {
+          setUpdateMessage("❌ Authentication error. Please log in again.");
+          // Optionally navigate('/login');
+          return;
+      }
 
       let finalPhotoValue = userData.photo; // Start with current photo
 
       // --- Determine final photo value based on user actions ---
       if (isPhotoMarkedForRemoval) {
           console.log("Photo marked for removal.");
-          finalPhotoValue = null; // ★ Signal backend to remove photo (adjust if backend needs empty string etc.)
+          finalPhotoValue = null;
       } else if (selectedFile) {
           // --- Upload new image ---
           setIsUploading(true);
@@ -221,12 +216,14 @@ const Profile = ({ setIsLoggedIn }) => {
 
           try {
               console.log("Uploading image...");
-              const uploadResponse = await axios.post('http://localhost:3000/api/auth/upload', formData, {
+              // --- CHANGED --- Use API_BASE_URL variable ---
+              const uploadResponse = await axios.post(`${API_BASE_URL}/api/auth/upload`, formData, {
                   headers: {
                       'Content-Type': 'multipart/form-data',
                       'Authorization': `Bearer ${token}`
                   }
               });
+              // --- END CHANGED ---
               finalPhotoValue = uploadResponse.data.photo; // Use the URL from backend response
               console.log("Image upload successful:", finalPhotoValue);
               setSelectedFile(null); // Clear file state
@@ -240,7 +237,7 @@ const Profile = ({ setIsLoggedIn }) => {
               setIsUploading(false); // Ensure upload state is reset
           }
       }
-      // Else (no new file, not marked for removal): finalPhotoValue remains userData.photo
+      // Else: finalPhotoValue remains userData.photo
 
       // --- Update User Details ---
       setUpdateMessage('⏳ Updating details...');
@@ -255,13 +252,14 @@ const Profile = ({ setIsLoggedIn }) => {
           };
           console.log("Updating profile data with payload:", updatePayload);
 
-          const response = await axios.put('http://localhost:3000/api/auth/user', updatePayload, {
+          // --- CHANGED --- Use API_BASE_URL variable ---
+          const response = await axios.put(`${API_BASE_URL}/api/auth/user`, updatePayload, {
               headers: { Authorization: `Bearer ${token}` }
           });
+          // --- END CHANGED ---
 
           // --- Success ---
           const updatedUserDataFromServer = response.data.user;
-          // Re-format date for display consistency
           updatedUserDataFromServer.dateOfBirth = updatedUserDataFromServer.dateOfBirth
                                                   ? new Date(updatedUserDataFromServer.dateOfBirth).toISOString().split('T')[0]
                                                   : '';
@@ -277,24 +275,22 @@ const Profile = ({ setIsLoggedIn }) => {
 
       } catch (updateError) {
           console.error("Profile update failed:", updateError);
-          // Handle potential case where photo upload succeeded but details update failed
           const errorMsg = `❌ Profile update failed: ${updateError.response?.data?.error || updateError.response?.data?.message || updateError.message}`;
           setUpdateMessage(errorMsg);
-          // Should we revert the photo state if only details failed? Complex, maybe just show error.
       }
   };
 
 
   // --- Logout Logic ---
-  const handleLogout = () => { /* ... Keep existing logout logic ... */
+  const handleLogout = () => {
     localStorage.removeItem('token');
     if (setIsLoggedIn) setIsLoggedIn(false);
     navigate('/login');
    };
 
   // --- Render Logic ---
-  if (isLoading) { /* ... loading ... */ }
-  if (error && !editMode) { /* ... error ... */ }
+  if (isLoading) return <p className="status-text loading-text">Loading profile...</p>; // Loading indicator
+  if (error && !editMode) return <p className="fetch-error-text error-box">{error}</p>; // Show fetch error if not editing
 
   const isDefaultPhoto = userData.photo === defaultUserIcon || !userData.photo;
 
@@ -306,7 +302,7 @@ const Profile = ({ setIsLoggedIn }) => {
           <img
             src={userData.photo || defaultUserIcon}
             alt={`${userData.name}'s profile`}
-            className="profile-image" // Style this class in Profile.css for size
+            className="profile-image"
             onError={(e) => { e.target.onerror = null; e.target.src=defaultUserIcon }}
           />
           <button onClick={handleEditOpen} className="update-btn edit-trigger-btn">
@@ -314,7 +310,6 @@ const Profile = ({ setIsLoggedIn }) => {
           </button>
         </div>
         <div className="user-info">
-           {/* ... user info paragraphs ... */}
             <h2>{userData.name || 'N/A'}</h2>
             <p><strong>Email:</strong> {userData.email || 'N/A'}</p>
             <p><strong>Phone:</strong> {userData.phone || 'Not Set'}</p>
@@ -339,14 +334,14 @@ const Profile = ({ setIsLoggedIn }) => {
 
             <form onSubmit={handleSaveProfile} className="profile-edit-form">
 
-              {/* --- Image Preview and Actions --- */}
+              {/* Image Preview and Actions */}
               <div className="form-group image-preview-section">
                  <label>Profile Photo:</label>
                  <div className="image-controls">
                      <img
                          src={imagePreviewUrl || defaultUserIcon}
                          alt="Profile preview"
-                         className="profile-image-preview" // Add style for this preview
+                         className="profile-image-preview"
                          onError={(e) => { e.target.onerror = null; e.target.src=defaultUserIcon }}
                      />
                      <div className="image-buttons">
@@ -354,20 +349,19 @@ const Profile = ({ setIsLoggedIn }) => {
                              <span>{selectedFile ? 'Change' : 'Upload'}</span>
                          </label>
                          <input
-                             ref={fileInputRef} // Use ref
+                             ref={fileInputRef}
                              type="file"
                              id="profileImageUpload"
                              style={{ display: 'none' }}
                              onChange={handleFileChange}
                              accept="image/png, image/jpeg, image/gif, image/webp"
                          />
-                         {/* Show Remove button only if current/preview photo is NOT the default */}
                          {imagePreviewUrl && imagePreviewUrl !== defaultUserIcon && (
                             <button
                                 type="button"
                                 className="remove-photo-btn button-like danger"
-                                onClick={handleRequestRemovePhoto} // Trigger confirmation
-                                disabled={isPhotoMarkedForRemoval} // Disable if already marked
+                                onClick={handleRequestRemovePhoto}
+                                disabled={isPhotoMarkedForRemoval}
                              >
                                  Remove
                              </button>
@@ -379,13 +373,12 @@ const Profile = ({ setIsLoggedIn }) => {
               </div>
 
 
-               {/* --- Text Fields with Labels --- */}
+               {/* Text Fields */}
               <div className="form-group">
                  <label htmlFor="edit-name">Name:</label>
                  <input id="edit-name" type="text" name="name" value={editData.name || ''} onChange={handleEditChange} required />
               </div>
-              {/* Email might not be editable - keep commented if needed */}
-              {/* <div className="form-group"> ... email input ... </div> */}
+              {/* Assuming email is not editable, but if it were, it would need API_BASE_URL too */}
               <div className="form-group">
                    <label htmlFor="edit-phone">Phone:</label>
                    <input id="edit-phone" type="tel" name="phone" placeholder="Optional" value={editData.phone || ''} onChange={handleEditChange} />
@@ -396,10 +389,10 @@ const Profile = ({ setIsLoggedIn }) => {
                </div>
                <div className="form-group">
                    <label htmlFor="edit-dob">Date of Birth:</label>
-                   <input id="edit-dob" type="date" name="dateOfBirth" value={editData.dateOfBirth || ''} onChange={handleEditChange} max={new Date().toISOString().split("T")[0]} /> {/* Prevent future dates */}
+                   <input id="edit-dob" type="date" name="dateOfBirth" value={editData.dateOfBirth || ''} onChange={handleEditChange} max={new Date().toISOString().split("T")[0]} />
                </div>
 
-              {/* --- Action Buttons --- */}
+              {/* Action Buttons */}
               <div className="form-actions">
                   <button type="submit" className="save-btn" disabled={isUploading}>
                      {isUploading ? 'Saving...' : 'Save Changes'}
@@ -413,14 +406,14 @@ const Profile = ({ setIsLoggedIn }) => {
         </div>
       )}
 
-        {/* ★★★ Render Confirmation Dialog ★★★ */}
+        {/* Render Confirmation Dialog */}
         <ConfirmationDialog
             isOpen={confirmationState.isOpen}
             message={confirmationState.message}
             onConfirm={confirmationState.actionType === 'removePhoto' ? confirmPhotoRemoval : () => {}} // Route to correct confirm action
             onCancel={cancelConfirmation}
-            confirmText={confirmationState.actionType === 'removePhoto' ? "Remove" : "Confirm"} // Customize confirm text
-            confirmButtonClass={confirmationState.actionType === 'removePhoto' ? 'danger' : ''} // Optional: Pass class for styling confirm button
+            confirmText={confirmationState.actionType === 'removePhoto' ? "Remove" : "Confirm"}
+            confirmButtonClass={confirmationState.actionType === 'removePhoto' ? 'danger' : ''}
         />
 
     </div> // End profile-container

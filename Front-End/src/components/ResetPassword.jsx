@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../assets/styles/AuthForms.css'; // Ensure this shared CSS file is imported
 
 // API Base URL (Defined Directly - Consistent)
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000"; // Replace if needed
 
 const ResetPassword = () => {
   const { token } = useParams(); // Get token from URL parameter

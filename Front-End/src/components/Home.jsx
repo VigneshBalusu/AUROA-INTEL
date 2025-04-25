@@ -17,7 +17,7 @@ import styles from '../assets/styles/Home.module.css'; // Main styles for Home
 // Note: PreviousChats should import its own PreviousChats.module.css
 
 // --- Constants ---
-const API_BASE_URL = "http://localhost:3000"; // Your backend URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000"; // Your backend URL
 
 // --- Axios Instance ---
 // Create an axios instance once when the module loads

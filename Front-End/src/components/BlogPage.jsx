@@ -5,7 +5,8 @@ import "../assets/styles/BlogPage.css"; // Ensure CSS path is correct
 import defaultUserIcon from "../assets/images/user-icon.png"; // Ensure path is correct
 // import { useNavigate } from 'react-router-dom'; // Uncomment if navigation is needed
 
-const API_BASE_URL = "http://localhost:3000"; // Define your API base URL
+const API_BASE_URL =import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+// Define your API base URL
 
 const BlogPage = () => {
   // --- State Variables ---
