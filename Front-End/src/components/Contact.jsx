@@ -4,7 +4,7 @@ import VigneshImage from '../assets/images/image.png';
 import ManojImage from '../assets/images/Manu.jpg';
 import DeviImage from '../assets/images/Devi.png';
 import JhanaviImage from '../assets/images/Jhanavi.jpeg';
-import ManasaImage from '../assets/images/Manasa.jpeg';
+import ManasaImage from '../assets/images/manasa.jpeg';
 
 const Contact = () => {
   // State for form and card flip
