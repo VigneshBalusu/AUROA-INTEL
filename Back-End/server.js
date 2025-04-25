@@ -881,8 +881,10 @@ app.use((err, req, res, next) => {
 // =============================================
 // --- Start Server ---
 // =============================================
+// --- Start Server ---
 app.listen(PORT, () => {
-    console.log(`\n🚀 Server running on http://localhost:${PORT} [${process.env.NODE_ENV || 'development'}]`);
+    // Corrected log message:
+    console.log(`\n🚀 Server running on port ${PORT} [${process.env.NODE_ENV || 'development'}]`);
 });
 
 export default app; // Export for testing
