@@ -1,37 +1,56 @@
+# render.yaml - Configuration for Render deployment
+
 services:
   # Backend Service (Web Service)
-  - type: web # Important: This defines the backend
-    name: auroa-intel # Use the exact name of your backend service
+  - type: web
+    name: AUROA-INTEL-Back-End        # <<< CORRECTED NAME
     runtime: node
-    region: oregon # Change to your chosen region (e.g., ohio)
+    region: ohio                    # <<< VERIFY YOUR REGION
     branch: master
     rootDir: Back-End
     buildCommand: "npm install"
     startCommand: "npm start"
+    healthCheckPath: /health        # Optional: Add if you have a /health endpoint
     envVars:
       - key: NODE_ENV
         value: production
-      - key: FRONTEND_URL
-        value: https://auroa-intel-front-end.onrender.com # Frontend URL for CORS
-      # Add other backend envVars like DATABASE_URL, JWT_SECRET here
+      - key: FRONTEND_URL             # For CORS configuration in server.js
+        # <<< VALUE MUST MATCH YOUR FRONTEND URL >>>
+        value: https://AUROA-INTEL-Front-End.onrender.com
+      - key: PORT                     # Optional: Render injects this, but good practice to be aware
+        value: 10000                  # Render's typical default, will be overridden by injected value
+      # --- ADD OTHER BACKEND ENV VARS BELOW ---
+      # Example (Replace with your actual values or use Render Secrets):
       # - key: DATABASE_URL
-      #   sync: false # Set sync: false if you manage it only in the dashboard
+      #   value: "your_mongodb_connection_string_here" # Or use 'sync: false' if set only in dashboard
       # - key: JWT_SECRET
-      #   sync: false
+      #   value: "your_super_secret_jwt_key"           # Or use 'sync: false'
+      # - key: CLOUDINARY_CLOUD_NAME
+      #   value: "your_cloudinary_cloud_name"
+      # - key: CLOUDINARY_API_KEY
+      #   value: "your_cloudinary_api_key"
+      # - key: CLOUDINARY_API_SECRET
+      #   value: "your_cloudinary_api_secret"
+      # - key: EMAIL_USER # Example for email service
+      #   value: "your_email_service_username"
+      # - key: EMAIL_PASS # Example for email service
+      #   value: "your_email_service_password"
+
 
   # Frontend Service (Static Site)
-  - type: static # Important: This defines the frontend
-    name: auroa-intel-front-end # Use the exact name of your frontend service
-    region: oregon # Change to your chosen region (e.g., ohio)
+  - type: static
+    name: AUROA-INTEL-Front-End     # <<< CORRECTED NAME
+    region: ohio                   # <<< VERIFY YOUR REGION
     branch: master
-    # Note: No rootDir needed if paths are relative to root in commands
+    # rootDir: (Not needed as build command includes cd)
     buildCommand: "cd Front-End && npm install && npm run build"
-    publishDir: Front-End/dist
+    publishDir: Front-End/dist      # Path relative to repository root
     envVars:
-      - key: VITE_API_BASE_URL
-        value: https://auroa-intel.onrender.com # Backend URL for frontend code
+      - key: VITE_API_BASE_URL      # For frontend code to call the backend
+        # <<< VALUE MUST MATCH YOUR BACKEND URL >>>
+        value: https://AUROA-INTEL-Back-End.onrender.com
     routes:
-      # Rewrite rule for SPA routing
+      # Rewrite rule for SPA (React Router) routing
       - type: rewrite
-        source: /*
-        destination: /index.html
+        source: /*                   # Match all paths
+        destination: /index.html    # Serve index.html for any path not found
