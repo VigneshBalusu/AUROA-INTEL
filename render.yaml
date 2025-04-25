@@ -1,7 +1,7 @@
 services:
   # Backend Service (Web Service)
   - type: web # Important: This defines the backend
-    name: auroa-intel # Use the exact name of your backend service
+    name: auroa-intel-back-end # Use the exact name of your backend service
     runtime: node
     region: oregon # Change to your chosen region (e.g., ohio)
     branch: master
