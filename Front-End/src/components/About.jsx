@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../assets/styles/About.css";
 import chatbotImage1 from "../assets/images/chatbot1.png";
 import chatbotImage2 from "../assets/images/chatbot2.png";
-import chatbotVideo from "../assets/videos/chatbot-demo.mp4";
+import chatbotVideo from "../assets/Videos/chatbot-demo.mp4";
 import chatbotImage3 from "../assets/images/chatbot3.png";
 import chatbotImage4 from "../assets/images/chatbot4.png";
 
