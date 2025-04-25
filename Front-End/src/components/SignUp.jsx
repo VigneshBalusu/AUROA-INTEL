@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../assets/styles/Signup.css'; // Ensure CSS has styles for .feedback-card
+import '../assets/styles/SignUp.css'; // Ensure CSS has styles for .feedback-card
 
 // --- ★ API Base URL (Define Directly - Consistent with Login fix) ★ ---
 const API_BASE_URL = "http://localhost:3000";
