@@ -1,0 +1,181 @@
+/* src/assets/styles/Login.css */
+/* Styles ONLY for the Login component - DECOUPLED */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* --- Login Page Container --- */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+  /* Split background matching screenshot */
+  background: linear-gradient(115deg, #ff8a65, #6a89cc); /* Same as shared example */
+  padding: 30px 15px;
+  box-sizing: border-box;
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Apply box-sizing to descendants */
+.login-container *,
+.login-container *::before,
+.login-container *::after {
+    box-sizing: inherit;
+}
+
+/* --- Login Form Card --- */
+.login-card {
+  background: #ffffff;
+  padding: 40px 45px;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  color: #111827;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+  border: 1px solid rgba(229, 231, 235, 0.5); /* Slightly softer border */
+  animation: loginFormFadeIn 0.5s ease-out forwards;
+}
+
+/* Login Title */
+.login-card h2 {
+  text-align: left;
+  margin: 0 0 35px 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Form Groups within Login */
+.login-container .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+/* Labels within Login */
+.login-container .form-group label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+/* Label Row for Password + Forgot Link */
+.login-container .label-and-link-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.login-container .label-and-link-container label { margin-bottom: 0; display: inline; }
+.login-container .label-and-link-container .forgot-password-link {
+  display: inline;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #4f46e5; /* Indigo link */
+  text-decoration: none;
+  white-space: nowrap;
+}
+.login-container .label-and-link-container .forgot-password-link:hover,
+.login-container .label-and-link-container .forgot-password-link:focus {
+  text-decoration: underline;
+  color: #3730a3;
+}
+
+/* Input Fields within Login */
+.login-card input[type="email"],
+.login-card input[type="password"] {
+  padding: 11px 14px; border: 1px solid #d1d5db; border-radius: 8px;
+  width: 100%; color: #1f2937; background-color: #f9fafb; font-size: 0.95rem;
+  box-sizing: border-box; transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+}
+.login-card input:focus {
+  outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+.login-card input::placeholder { color: #9ca3af; }
+.login-card input:disabled { background-color: #e5e7eb; cursor: not-allowed; }
+
+/* Password Container & Toggle within Login */
+.login-container .password-container { position: relative; display: flex; align-items: center; }
+.login-container .password-container input { flex-grow: 1; padding-right: 50px !important; }
+.login-container .toggle-btn {
+  position: absolute; right: 1px; top: 1px; bottom: 1px; width: 45px;
+  background: transparent; border: none; border-left: 1px solid #e5e7eb;
+  padding: 0; margin: 0; color: #6b7280; cursor: pointer; font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+  border-top-right-radius: 8px; border-bottom-right-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.login-container .toggle-btn:hover:not(:disabled) { background-color: #f3f4f6; color: #4f46e5; }
+.login-container .toggle-btn:focus-visible { outline: 2px solid rgba(99, 102, 241, 0.4); outline-offset: 1px; }
+.login-container .toggle-btn:disabled { cursor: not-allowed; color: #9ca3af; }
+
+/* Submit Button within Login */
+.login-container .submit-btns {
+  display: block; width: 100%; padding: 12px 20px; border: none;
+  background: linear-gradient(90deg, #818cf8, #6366f1); /* Blue/Violet gradient */
+  color: white; font-size: 1rem; font-weight: 600; border-radius: 25px;
+  cursor: pointer; margin-top: 25px; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+  transition: all 0.2s ease; font-family: inherit;
+}
+.login-container .submit-btns:hover:not(:disabled) {
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.3); transform: translateY(-2px);
+}
+.login-container .submit-btns:active:not(:disabled) { transform: translateY(0) scale(0.98); box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2); }
+.login-container .submit-btns:disabled { background: #c7d2fe; box-shadow: none; cursor: not-allowed; transform: none; }
+
+/* Redirect Text & Link within Login */
+.login-container .redirect-text { text-align: center; margin-top: 25px; font-size: 0.9rem; color: #4b5563; }
+.login-container .link {
+  color: #4f46e5; cursor: pointer; font-weight: 600; text-decoration: none;
+  transition: color 0.2s ease; padding: 2px 0; margin: 0 3px;
+}
+.login-container .link:hover,
+.login-container .link:focus-visible { color: #3730a3; text-decoration: underline; outline: none; }
+
+/* Feedback Card within Login */
+.login-container .feedback-card {
+  position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+  min-width: 280px; max-width: 90%; width: fit-content; padding: 14px 25px;
+  border-radius: 8px; font-weight: 500; box-shadow: 0 5px 18px rgba(0, 0, 0, 0.18);
+  z-index: 1010; text-align: center; font-size: 0.95rem; opacity: 0; visibility: hidden;
+  transition: opacity 0.4s ease, top 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  box-sizing: border-box; border: 1px solid transparent;
+}
+.login-container .feedback-card.show { opacity: 1; visibility: visible; top: 30px; }
+.login-container .feedback-card.success { background-color: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
+.login-container .feedback-card.failure, .login-container .feedback-card.error { background-color: #fff1f2; color: #9f1239; border-color: #ffcbd1; }
+.login-container .feedback-card.info { background-color: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+.login-container .feedback-card .link { font-weight: 600; }
+
+/* Responsive Styles within Login */
+@media (max-width: 500px) {
+  .login-container { padding: 25px 10px; }
+  .login-card { padding: 30px 20px; max-width: 95%; border-radius: 12px; }
+  .login-card h2 { font-size: 1.5rem; margin-bottom: 25px; }
+  .login-container .form-group { margin-bottom: 16px; }
+  .login-card input { font-size: 0.9rem; padding: 10px 12px; }
+  .login-container .toggle-btn { width: 40px; font-size: 1.1rem; }
+  .login-container .submit-btns { font-size: 0.95rem; padding: 11px 15px; }
+  .login-container .redirect-text { font-size: 0.85rem; margin-top: 20px;}
+  .login-container .label-and-link-container { margin-bottom: 6px; }
+  .login-container .label-and-link-container .forgot-password-link { font-size: 0.75rem; }
+  .login-container .feedback-card { max-width: calc(100% - 30px); font-size: 0.9rem; padding: 12px 20px;}
+}
+
+@keyframes loginFormFadeIn { /* Specific animation name if needed */
+  from { opacity: 0; transform: translateY(15px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}

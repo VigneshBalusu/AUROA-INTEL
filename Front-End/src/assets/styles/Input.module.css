@@ -1,0 +1,177 @@
+/* src/assets/styles/Input.module.css */
+/* Refined Styles for Input Component - Matching latest screenshot */
+
+/* Define CSS Variables within the scope of the wrapper */
+.inputWrapper {
+  --input-bg: #3a3f4b;
+  --input-border: #4a4e5c;
+  --input-border-focus: #7b89da;
+  --input-shadow-focus: rgba(123, 137, 218, 0.2);
+  --input-text-color: #e1e3e6;
+  --input-placeholder-color: #8e94a3;
+  --input-disabled-opacity: 0.6;
+  --input-radius: 12px;
+  --input-padding-y: 5px;
+  --input-padding-x-left: 15px;
+  --input-padding-x-right: 5px;
+  --input-gap: 8px;
+
+  --textarea-font-size: 0.95rem;
+  --textarea-line-height: 1.5;
+  --textarea-padding-y: 10px;
+  --textarea-min-height: 24px;
+  --textarea-max-height: 160px;
+
+  /* ★ Button Variable Updates ★ */
+  --button-bg: linear-gradient(135deg, #7b89da, #6a7bcd); /* Brighter gradient */
+  --button-hover-bg: linear-gradient(135deg, #6a7bcd, #5a6ac0); /* Darker hover */
+  --button-disabled-bg: #5a5f70; /* Greyer disabled */
+  --button-disabled-opacity: 0.6;
+  --button-icon-color: #ffffff; /* ★ White icon for contrast */
+  --button-size: 40px;
+  --button-icon-size: 18px;
+  --button-radius: 50%; /* ★ Make it fully circular */
+  --button-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  --button-hover-shadow: 0 4px 8px rgba(123, 137, 218, 0.3);
+
+  /* Base Layout */
+  display: flex;
+  align-items: flex-end;
+  background-color: var(--input-bg);
+  border-radius: var(--input-radius);
+  border: 1px solid var(--input-border);
+  padding: var(--input-padding-y) var(--input-padding-x-right) var(--input-padding-y) var(--input-padding-x-left);
+  margin: 15px auto 0 auto;
+  max-width: 750px;
+  width: 95%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  bottom: 25px;
+}
+.faqSidebar.open { transform: translateX(0); }
+.mainArea.faqSidebarActive { /* Optional class added to mainArea when sidebar is open */
+  /* Example: Push content if needed */
+  margin-left: 300px;
+  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ... (Keep .inputWrapper:focus-within styles) ... */
+.inputWrapper:focus-within {
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 2px var(--input-shadow-focus);
+}
+
+
+/* Focus State for the entire wrapper */
+.inputWrapper:focus-within {
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 2px var(--input-shadow-focus);
+}
+
+/* Input Field (Textarea) */
+.inputField {
+  flex-grow: 1; border: none; outline: none; background: transparent;
+  font-size: var(--textarea-font-size); color: var(--input-text-color);
+  padding: var(--textarea-padding-y) 0; margin-right: var(--input-gap);
+  font-family: inherit; resize: none; overflow-y: hidden;
+  min-height: var(--textarea-min-height); max-height: var(--textarea-max-height);
+  line-height: var(--textarea-line-height); box-sizing: border-box;
+  scrollbar-width: none;
+  ;
+}
+.inputField::-webkit-scrollbar { display: none; }
+.inputField::placeholder { color: var(--input-placeholder-color); opacity: 1; }
+.inputField:disabled { cursor: not-allowed; opacity: var(--input-disabled-opacity); }
+.inputField::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+
+.inputField::placeholder {
+  color: var(--input-placeholder-color);
+  opacity: 1;
+}
+
+.inputField:disabled {
+  cursor: not-allowed;
+  opacity: var(--input-disabled-opacity);
+}
+
+/* Send Button */
+.sendButton {
+  background: var(--button-bg); /* Use gradient */
+  color: var(--button-icon-color); /* White icon */
+  border: none;
+  border-radius: var(--button-radius); /* Circular */
+  width: var(--button-size);
+  height: var(--button-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease; /* Smooth transitions for hover/active */
+  box-shadow: var(--button-shadow);
+  /* No margin-left needed if gap is set on inputWrapper */
+  /* align-self: flex-end; Removed as align-items: center on wrapper handles it now */
+}
+
+.sendButton svg {
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+  fill: currentColor;
+}
+
+.sendButton:hover:not(:disabled) {
+  background: var(--button-hover-bg); /* Darker hover gradient */
+  box-shadow: var(--button-hover-shadow);
+  transform: scale(1.05); /* Slight pop */
+}
+
+.sendButton:active:not(:disabled) {
+  transform: scale(0.98); /* Press effect */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Smaller shadow when pressed */
+}
+
+.sendButton:disabled {
+  background: var(--button-disabled-bg); /* Use disabled background */
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: scale(1); /* No scale change when disabled */
+  opacity: var(--button-disabled-opacity);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .inputWrapper {
+    /* Slightly smaller button/padding for tablets */
+    --button-size: 38px;
+    --button-icon-size: 16px;
+    --input-padding-x-left: 12px;
+    --input-gap: 8px;
+    max-width: 90%;
+    border-radius: 10px; /* Slightly smaller radius */
+     --button-radius: 6px;
+  }
+  .inputField {
+    --textarea-font-size: 0.9rem;
+    --textarea-padding-y: 8px;
+    --textarea-min-height: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  .inputWrapper {
+    /* Even smaller for mobile */
+    --button-size: 36px;
+    --button-icon-size: 15px;
+    --input-padding-x-left: 10px;
+    --input-gap: 6px;
+    max-width: 95%;
+    border-radius: 8px;
+    --button-radius: 6px;
+     padding-top: 4px;
+     padding-bottom: 4px;
+  }
+   .inputField {
+    --textarea-padding-y: 6px;
+  }
+}

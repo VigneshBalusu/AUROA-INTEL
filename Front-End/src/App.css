@@ -1,0 +1,74 @@
+/* App.css - Interfering Global Styles REMOVED */
+
+/*
+  The following rules applied to #root were removed because they
+  constrained the width, added padding, and centered text globally,
+  which interfered with components like Login and Home that need
+  to control their own full-viewport layout.
+
+  REMOVED:
+  #root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+*/
+
+/*
+  The following rule applied a transparent background to ALL elements (*),
+  which overrides intended background colors/gradients set in components
+  or their specific CSS files.
+
+  REMOVED:
+  *{
+    background: transparent;
+  }
+*/
+
+
+/* --- Keep other styles below ONLY if they are specifically needed --- */
+/* --- by the App.jsx component itself or genuinely global patterns --- */
+
+/* Example: Logo styles (if used in App.jsx) */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+/* Example: Keyframes (if used) */
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Example: Media Query (if used) */
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+/* Example: Card style (if used as a generic card in App.jsx) */
+.card {
+  padding: 2em;
+}
+
+/* Example: Read-the-docs style (if used) */
+.read-the-docs {
+  color: #888;
+}
+
+/* --- ADD any other styles truly needed by App.jsx itself below --- */

@@ -1,0 +1,268 @@
+/* src/assets/styles/BlogPage.css */
+
+/* Define variables for the blog page theme */
+:root {
+    --blog-bg: #1a1a1d; /* Dark background */
+    --blog-card-bg: #2d2f37; /* ★ Darker card background from screenshot */
+    --blog-card-hover-bg: #363940; /* Slightly lighter hover */
+    --blog-text-primary: #e8e8ed; /* Main light text */
+    --blog-text-secondary: #9a9cac; /* Secondary text (experience) */
+    --blog-text-tertiary: #6c6e78; /* Tertiary text (email) */
+    --blog-accent1: #b39ddb; /* Lighter Purple accent */
+    --blog-accent2: #ff8a65; /* Lighter Red/Orange accent */
+    --blog-border-color: #404045; /* Border for separation */
+    --blog-shadow-color: rgba(0, 0, 0, 0.4); /* Slightly softer shadow */
+    --blog-card-min-width: 290px; /* Min width for grid items */
+    --blog-card-border-radius: 10px; /* ★ Slightly less rounded corners */
+    --blog-popup-bg: #31343b;
+    --blog-input-bg: #25282e;
+    --blog-input-border: #4d515a;
+    --blog-img-size: 45px; /* Image size */
+}
+
+/* Apply box-sizing within the blog page */
+.blog-page *,
+.blog-page *::before,
+.blog-page *::after {
+    box-sizing: border-box;
+}
+
+/* ==============================
+      Scoped Global Styles for Blog Page
+============================== */
+.blog-page {
+    padding: 2rem 3rem;
+    background: var(--blog-bg);
+    color: var(--blog-text-primary);
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* ==============================
+      Header Section (Scoped)
+============================== */
+.blog-page .header-container {
+    display: flex; flex-wrap: wrap; justify-content: space-between;
+    align-items: center; gap: 1rem; margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem; border-bottom: 1px solid var(--blog-border-color);
+}
+.blog-page .header-container h1 {
+    font-size: 2.1rem; font-weight: 600;
+    background: linear-gradient(90deg, var(--blog-accent1), var(--blog-accent2) 80%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin: 0; letter-spacing: 0.5px; flex-grow: 1;
+}
+.blog-page .add-experience-btn {
+    padding: 0.8rem 1.4rem; border: none; border-radius: 25px;
+    background: linear-gradient(135deg, #a77bde, #be94f8);
+    color: white; font-size: 0.95rem; font-weight: 500; cursor: pointer;
+    transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+.blog-page .add-experience-btn:hover {
+    background: linear-gradient(135deg, #be94f8, #a77bde);
+    transform: translateY(-2px); box-shadow: 0 6px 15px rgba(168, 123, 224, 0.3);
+}
+.blog-page .add-experience-btn:active { transform: translateY(0px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+
+
+/* ==============================
+      Experience Grid (Scoped)
+============================== */
+.blog-page .experience-grid {
+    display: grid;
+    /* Adjust minmax to ensure cards don't get too small */
+    grid-template-columns: repeat(auto-fit, minmax(var(--blog-card-min-width), 1fr));
+    gap: 1.8rem;
+    margin-top: 2.5rem;
+}
+
+/* ==============================
+      Experience Card (Scoped) - ★★★ Styles Match Screenshot ★★★
+============================== */
+.blog-page .experience-card {
+    background: var(--blog-card-bg);
+    padding: 1.5rem; /* Adjust padding */
+    border-radius: var(--blog-card-border-radius);
+    box-shadow: 0 5px 15px var(--blog-shadow-color);
+    border: 1px solid var(--blog-border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Added background transition */
+    overflow: hidden;
+    height: auto; /* ★ Let content define height */
+    min-height: 190px; /* ★ Adjusted minimum height */
+    /* Removed fixed width/height from previous attempt */
+}
+.blog-page .experience-card:hover {
+    cursor: pointer;
+    transform: translateY(-4px); /* Subtle lift */
+    box-shadow: 0 8px 20px var(--blog-shadow-color);
+    background: var(--blog-card-hover-bg); /* Lighter bg on hover */
+}
+/* Removed ::before hover effect */
+
+/* Card Image Wrapper */
+.blog-page .experience-card .img-wrapper {
+    width: var(--blog-img-size);
+    height: var(--blog-img-size);
+    border-radius: 50%; overflow: hidden; margin-bottom: 1rem;
+    border: 2px solid #777;
+    flex-shrink: 0; background-color: #555;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.blog-page .experience-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Card Text Content Wrapper */
+.blog-page .experience-card .text-content { width: 100%; }
+
+/* Card Text Content - Centered */
+.blog-page .experience-card h3 { /* Name */
+    font-size: 1.05rem; /* Adjusted size */ margin: 0 0 0.4rem 0; color: var(--blog-text-primary); font-weight: 600;
+}
+.blog-page .experience-card p.experience-text { /* Experience */
+    font-size: 0.9rem; line-height: 1.5; color: var(--blog-text-secondary); margin: 0 0 0.6rem 0;
+}
+.blog-page .experience-card p.email-text { /* Email */
+    font-size: 0.8rem; color: var(--blog-text-tertiary); margin: 0; word-break: break-all;
+}
+.blog-page .experience-card .tagged-info { /* Tagged info */
+    font-size: 0.75rem; color: var(--blog-text-tertiary); margin-top: 0.8rem; font-style: italic;
+    border-top: 1px solid var(--blog-border-color); padding-top: 0.6rem; width: 90%;
+    margin-left: auto; margin-right: auto;
+}
+
+/* Tagged Card - Border */
+.blog-page .experience-card.tagged { border-left: 4px solid var(--blog-accent2); }
+
+/* ==============================
+      Popup Styles (Scoped & Refined)
+============================== */
+.blog-page .popup-overlay {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+    display: flex; align-items: center; justify-content: center; z-index: 9999;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; backdrop-filter: blur(6px);
+}
+.blog-page .popup-overlay.visible { opacity: 1; visibility: visible; }
+
+.blog-page .popup-container {
+    background: var(--blog-popup-bg); color: var(--blog-text-primary);
+    padding: 2rem 2.5rem; border-radius: 15px; border: 1px solid var(--blog-border-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6); max-width: 480px;
+    width: 90%; animation: blogPopupSlideUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    transform: translateY(20px); opacity: 0; position: relative;
+}
+.blog-page .popup-overlay.visible .popup-container { opacity: 1; transform: translateY(0); }
+
+.blog-page .popup-container .popup-close-btn {
+    position: absolute; top: 12px; right: 15px; background: transparent; border: none;
+    font-size: 2rem; color: #888; cursor: pointer; line-height: 1; padding: 0 5px;
+    transition: color 0.2s ease;
+}
+.blog-page .popup-container .popup-close-btn:hover { color: var(--blog-text-primary); }
+
+.blog-page .popup-container h2 {
+    margin: 0 0 1.8rem 0; color: #ffffff; text-align: center;
+    font-size: 1.7rem; font-weight: 600;
+}
+
+/* Form inside popup */
+.blog-page .popup-container .experience-form { background: none; padding: 0; box-shadow: none; margin-bottom: 0; gap: 1.2rem; }
+.blog-page .popup-container .form-group { margin-bottom: 0; }
+.blog-page .popup-container .experience-form label {
+    display: block; margin-bottom: 6px; font-weight: 500;
+    font-size: 0.9rem; color: var(--blog-text-secondary);
+}
+.blog-page .popup-container .experience-form input[type="email"],
+.blog-page .popup-container .experience-form textarea {
+     background-color: var(--blog-input-bg); border: 1px solid var(--blog-input-border); color: var(--blog-text-primary);
+     padding: 0.9rem 1rem; border-radius: 8px; font-size: 1rem; width: 100%; font-family: inherit;
+     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.blog-page .popup-container .experience-form input::placeholder,
+.blog-page .popup-container .experience-form textarea::placeholder { color: #777; }
+.blog-page .popup-container .experience-form input:focus,
+.blog-page .popup-container .experience-form textarea:focus {
+    outline: none; border-color: var(--blog-accent1);
+    box-shadow: 0 0 0 3px rgba(155, 89, 182, 0.25);
+}
+.blog-page .popup-container .experience-form textarea { min-height: 100px; resize: vertical; }
+
+/* Tagging section styling */
+.blog-page .popup-container .tagging-section { border-top: 1px solid var(--blog-border-color); padding-top: 1rem; margin-top: 0.5rem;}
+.blog-page .popup-container .tag-btn {
+    background: transparent; border: 1px dashed var(--blog-accent2); color: var(--blog-accent2);
+    width: auto; align-self: flex-start; font-size: 0.9rem; padding: 0.5rem 1rem;
+    transition: all 0.2s ease; border-radius: 6px; cursor: pointer;
+}
+.blog-page .popup-container .tag-btn:hover { background: rgba(231, 76, 60, 0.1); border-style: solid; }
+.blog-page .popup-container .cancel-tag-btn {
+     background: #555; color: #eee; font-size: 0.8rem; padding: 4px 8px;
+     border-radius: 4px; border: none; cursor: pointer; transition: background 0.2s ease;
+}
+.blog-page .popup-container .cancel-tag-btn:hover { background: #666; }
+
+/* Submit button inside popup */
+.blog-page .popup-container .submit-experience-btn {
+     width: 100%; margin-top: 1.5rem; padding: 1rem; font-size: 1.1rem; font-weight: 600;
+     background: var(--blog-accent1); border-radius: 8px; border: none; color: white; cursor: pointer;
+     transition: background 0.2s ease;
+}
+.blog-page .popup-container .submit-experience-btn:hover { background: #b07cc6; }
+
+/* Form error message */
+.blog-page .popup-container .form-error-text {
+    color: var(--blog-accent2); text-align: center; margin: -0.5rem 0 1rem 0;
+    font-size: 0.9rem; font-weight: 500; min-height: 1.2em; /* Reserve space */
+}
+
+/* Keyframes are global */
+@keyframes blogPopupSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes blogSlideIn { from { transform: translateY(30px) scale(0.95); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+@keyframes blogFadeInOut { 0% { opacity: 0; transform: translate(-50%, -20px); } 10% { opacity: 1; transform: translate(-50%, 0); } 90% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, -20px); } }
+
+/* ==============================
+      Status/Error Text (Scoped)
+============================== */
+.blog-page .status-text { text-align: center; margin-top: 3rem; color: var(--blog-text-secondary); font-size: 1.1rem; }
+.blog-page .fetch-error-text { text-align: center; margin-top: 3rem; color: var(--blog-accent2); font-size: 1.1rem; font-weight: 500; }
+
+/* ==============================
+      Responsive Design (Scoped)
+============================== */
+@media (max-width: 1024px) {
+    .blog-page .experience-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); } /* Smaller min width */
+}
+@media (max-width: 768px) {
+     .blog-page { padding: 1.5rem; }
+     .blog-page .experience-grid { gap: 1.2rem; }
+     .blog-page .header-container { flex-direction: column; align-items: center; gap: 1rem;}
+     .blog-page .header-container h1 { font-size: 2rem; text-align: center; }
+     .blog-page .add-experience-btn { width: auto; max-width: 250px; font-size: 0.9rem;}
+     .blog-page .popup-message { width: 90%; font-size: 0.9rem; }
+     .blog-page .experience-card { padding: 1.2rem; min-height: 170px;} /* Adjust min-height */
+     .blog-page .experience-card .img-wrapper { width: 40px; height: 40px;} /* Smaller image on tablet */
+
+}
+@media (max-width: 480px) {
+     .blog-page { padding: 1rem; }
+     .blog-page .header-container h1 { font-size: 1.6rem; } /* Further reduce size */
+     .blog-page .add-experience-btn { font-size: 0.9rem; padding: 0.8rem 1rem; width: 100%;}
+     .blog-page .experience-grid { grid-template-columns: 1fr; gap: 1rem; } /* Single column */
+     .blog-page .experience-card { padding: 1rem; min-height: auto;} /* Let content define height fully on mobile */
+     .blog-page .experience-card h3 { font-size: 0.95rem; }
+     .blog-page .experience-card p { font-size: 0.85rem; }
+     .blog-page .experience-card .img-wrapper { width: 40px; height: 40px;}
+     .blog-page .popup-container { padding: 1.5rem; max-width: 95%; }
+     .blog-page .popup-container h2 { font-size: 1.4rem; }
+     .blog-page .popup-container .experience-form { gap: 1rem; }
+     .blog-page .popup-container .experience-form label { font-size: 0.85rem; }
+     .blog-page .popup-container .experience-form input,
+     .blog-page .popup-container .experience-form textarea { font-size: 0.95rem; padding: 0.8rem; }
+     .blog-page .popup-container .experience-form button { font-size: 1rem; padding: 0.8rem; }
+     .blog-page .popup-container .tag-btn { font-size: 0.85rem; padding: 0.5rem 0.9rem; }
+     .blog-page .popup-container .cancel-tag-btn { font-size: 0.75rem; padding: 3px 6px;}
+}

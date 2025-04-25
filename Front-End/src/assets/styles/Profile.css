@@ -1,0 +1,493 @@
+/* src/assets/styles/Profile.css */
+
+/* Define some variables for consistency (Optional but recommended) */
+:root {
+  --profile-primary-color: #6a89cc; /* Muted blue/purple */
+  --profile-secondary-color: #e57373; /* Muted red for danger/logout */
+  --profile-success-color: #28a745; /* Green */
+  --profile-success-bg: #d4edda;
+  --profile-success-text: #155724;
+  --profile-success-border: #c3e6cb;
+  --profile-error-color: #dc3545; /* Red */
+  --profile-error-bg: #f8d7da;
+  --profile-error-text: #721c24;
+  --profile-error-border: #f5c6cb;
+  --profile-info-bg: #e2e3e5; /* Light grey for info messages */
+  --profile-info-text: #383d41;
+  --profile-info-border: #d6d8db;
+  --profile-text-dark: #333;
+  --profile-text-medium: #555;
+  --profile-text-light: #f0f0f0;
+  --profile-bg-light: #ffffff;
+  --profile-bg-medium: #f8f9fa; /* Light background for inputs/sections */
+  --profile-border-color: #dee2e6; /* Standard border color */
+  --profile-card-radius: 12px; /* Softer radius */
+  --profile-focus-ring: rgba(106, 137, 204, 0.25); /* Focus outline color */
+}
+
+
+/* Profile Page Container */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align card to top */
+  min-height: calc(100vh - 60px); /* Adjust if you have a fixed navbar */
+  width: 100%;
+  background:linear-gradient(90deg, #ff6f61, #6a89cc);
+  padding: 40px 20px;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* System font */
+}
+/* Apply box-sizing to descendants */
+.profile-container *,
+.profile-container *::before,
+.profile-container *::after {
+  box-sizing: inherit;
+}
+
+/* Profile Card - View Mode Styling */
+.profile-container .profile-card { /* Base card style */
+  background: var(--profile-bg-light);
+  padding: 2rem 2.5rem;
+  border-radius: var(--profile-card-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Softer shadow */
+  max-width: 500px; /* Max width */
+  width: 100%;
+  color: var(--profile-text-dark);
+  text-align: center;
+  animation: profileFadeIn 0.4s ease-out forwards;
+  margin-top: 20px; /* Space from top */
+  border: 1px solid var(--profile-border-color); /* Subtle border */
+}
+/* Style for when card displays only an error */
+.profile-container .profile-card.error-display {
+  color: var(--profile-error-text);
+  font-weight: 500;
+  background-color: var(--profile-error-bg);
+  border: 1px solid var(--profile-error-border);
+}
+
+/* Profile Image Container (View Mode) */
+.profile-container .image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem; /* Add padding below */
+  border-bottom: 1px solid var(--profile-border-color); /* Separator */
+}
+
+.profile-container .profile-image { /* Main profile view image */
+  width: 140px; /* Slightly larger */
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--profile-primary-color);
+  box-shadow: 0 3px 10px rgba(0,0,0, 0.15);
+  background-color: #e9ecef; /* Placeholder */
+  display: block; /* Remove potential extra space */
+}
+
+/* "Edit Profile" Button in View Mode */
+.profile-container .edit-trigger-btn {
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+  background-color: var(--profile-primary-color);
+  border: none;
+  border-radius: 20px; /* Pill shape */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.profile-container .edit-trigger-btn:hover {
+  background-color: #5577b7; /* Darker primary */
+  transform: scale(1.05);
+}
+
+/* User Info Section (View Mode) */
+.profile-container .user-info {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.profile-container .user-info h2 { /* Name */
+  font-size: 1.8rem; /* Slightly larger name */
+  color: var(--profile-text-dark);
+  margin: 0 0 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+.profile-container .user-info p { /* Info lines */
+  font-size: 0.95rem;
+  color: var(--profile-text-medium);
+  word-break: break-word;
+  margin: 0.8rem 0; /* Increased spacing */
+  line-height: 1.6;
+  display: flex; /* Align label and value */
+  gap: 10px; /* Slightly more gap */
+  align-items: baseline; /* Align baseline of text */
+}
+.profile-container .user-info p strong { /* Label part */
+  color: var(--profile-text-dark);
+  font-weight: 600;
+  min-width: 90px; /* Align labels */
+  flex-shrink: 0; /* Prevent label from shrinking */
+}
+
+/* Logout Button */
+.profile-container .logout-btn {
+  margin-top: 1.5rem; /* More space above */
+  padding: 11px 25px; /* Adjusted padding */
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  background-color: var(--profile-secondary-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Make button full width */
+}
+.profile-container .logout-btn:hover { background-color: #d35f5f; /* Darker secondary */ }
+
+
+/* === Edit Popup Styles === */
+.profile-container .edit-popup {
+  position: fixed;
+  inset: 0; /* Cover screen */
+  background: rgba(0, 0, 0, 0.65); /* Darker overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1300;
+  padding: 20px;
+  overflow-y: auto; /* Allow scroll if popup content is tall */
+  animation: profileFadeIn 0.2s ease-out forwards; /* Faster fade for overlay */
+}
+
+.profile-container .edit-card { /* Popup card */
+  background: var(--profile-bg-light);
+  padding: 2rem;
+  border-radius: var(--profile-card-radius);
+  width: 100%;
+  max-width: 520px; /* Slightly wider edit card */
+  box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+  animation: scaleIn 0.3s ease-out forwards; /* Scale effect for card */
+  position: relative; /* For close button */
+  border: 1px solid var(--profile-border-color);
+}
+
+.profile-container .edit-card h3 {
+  margin: 0 0 1.5rem 0;
+  color: var(--profile-text-dark);
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Form styles within edit card */
+.profile-container .profile-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between form groups */
+}
+
+.profile-container .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.profile-container .form-group label {
+  margin-bottom: 6px; /* Space between label and input */
+  font-weight: 500; /* Medium weight labels */
+  font-size: 0.9rem;
+  color: var(--profile-text-medium);
+}
+
+/* Inputs and Textarea in Edit Form */
+.profile-container .edit-card input[type="text"],
+.profile-container .edit-card input[type="email"], /* Keep style if email becomes editable */
+.profile-container .edit-card input[type="tel"],
+.profile-container .edit-card input[type="date"],
+.profile-container .edit-card textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--profile-border-color);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: var(--profile-text-dark);
+  background: var(--profile-bg-medium); /* Light background for inputs */
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.profile-container .edit-card input:focus,
+.profile-container .edit-card textarea:focus {
+  outline: none;
+  border-color: var(--profile-primary-color);
+  box-shadow: 0 0 0 3px var(--profile-focus-ring); /* Focus ring */
+}
+.profile-container .edit-card textarea {
+  resize: vertical;
+  min-height: 70px;
+  line-height: 1.5;
+}
+
+/* --- ★ Image Preview & Controls Section ★ --- */
+.profile-container .image-preview-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center everything */
+  gap: 15px; /* Space between elements */
+  padding: 15px;
+  margin-bottom: 1rem;
+  background-color: var(--profile-bg-medium); /* Section background */
+  border-radius: 8px;
+  border: 1px solid var(--profile-border-color);
+}
+/* Hide the main label visually, but keep for accessibility */
+.profile-container .image-preview-section > label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.profile-container .image-controls {
+    display: flex;
+    align-items: center; /* Align image and buttons vertically */
+    gap: 20px; /* Space between image and buttons */
+    width: 100%;
+    justify-content: center; /* Center image and buttons */
+}
+
+.profile-container .profile-image-preview { /* Image preview in edit */
+  width: 100px; /* Smaller preview */
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--profile-border-color);
+  background-color: #e9ecef; /* Placeholder */
+  display: block; /* Prevents inline spacing issues */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.profile-container .image-buttons { /* Container for upload/remove */
+    display: flex;
+    flex-direction: column; /* Stack buttons */
+    gap: 10px; /* Space between upload and remove buttons */
+    align-items: flex-start; /* Align buttons left */
+}
+
+/* --- ★ Button-like styles for Upload/Remove ★ --- */
+.profile-container .button-like {
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 6px;
+  border: 1px solid transparent; /* Base border */
+  background-color: #6c757d; /* Default grey */
+  color: white;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+.profile-container .button-like:hover {
+  opacity: 0.85;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Upload label specific style */
+.profile-container .upload-label.button-like {
+  background-color: var(--profile-primary-color); /* Blue for upload */
+  border-color: var(--profile-primary-color);
+}
+.profile-container .upload-label.button-like:hover {
+   background-color: #5577b7;
+   border-color: #5577b7;
+}
+
+/* Remove button specific style */
+.profile-container .remove-photo-btn.button-like {
+  background-color: transparent;
+  border: 1px solid var(--profile-secondary-color); /* Danger color border */
+  color: var(--profile-secondary-color); /* Danger color text */
+}
+.profile-container .remove-photo-btn.button-like:hover {
+  background-color: rgba(229, 115, 115, 0.1); /* Subtle danger background */
+  border-color: #d35f5f;
+  color: #d35f5f;
+}
+.profile-container .remove-photo-btn.button-like:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    /* Keep appearance consistent when disabled */
+    background-color: transparent !important;
+    border-color: var(--profile-secondary-color) !important;
+    color: var(--profile-secondary-color) !important;
+}
+
+/* Display selected file name */
+.profile-container .file-name-display {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.8em;
+  color: var(--profile-text-medium);
+  font-style: italic;
+  word-break: break-all; /* Ensure long names wrap/break */
+  text-align: center; /* Center below image section */
+  width: 100%;
+}
+.profile-container .file-name-display.info { /* Style for "will be removed" message */
+    color: var(--profile-text-medium);
+    font-weight: 500;
+}
+/* --- End Image Preview Section Styles --- */
+
+
+/* Form Action Buttons Container */
+.profile-container .form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--profile-border-color);
+  padding-top: 1.5rem;
+}
+
+.profile-container .save-btn,
+.profile-container .cancel-btn {
+  flex: 1;
+  color: white;
+  border: none;
+  padding: 11px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+.profile-container .save-btn { background-color: var(--profile-success-color); }
+.profile-container .save-btn:hover { background-color: #218838; }
+.profile-container .cancel-btn { background-color: #6c757d; }
+.profile-container .cancel-btn:hover { background-color: #5a6268; }
+
+.profile-container .save-btn:disabled,
+.profile-container .cancel-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Message Card inside Popup */
+.profile-container .message-card {
+  margin: -1rem 0 1rem 0; /* Position between title and form */
+  padding: 10px 15px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: 500;
+  border: 1px solid transparent; /* Base border */
+  /* Added fixed height removed */
+}
+.profile-container .message-card.success {
+  background-color: var(--profile-success-bg);
+  color: var(--profile-success-text);
+  border-color: var(--profile-success-border);
+}
+.profile-container .message-card.error {
+  background-color: var(--profile-error-bg);
+  color: var(--profile-error-text);
+  border-color: var(--profile-error-border);
+}
+.profile-container .message-card.info { /* Style for info/pending messages */
+  background-color: var(--profile-info-bg);
+  color: var(--profile-info-text);
+  border-color: var(--profile-info-border);
+}
+
+/* Popup Close Button */
+.profile-container .popup-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #adb5bd; /* Lighter grey */
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 5px; /* Add slight padding */
+  transition: color 0.2s ease;
+}
+.profile-container .popup-close-btn:hover { color: #6c757d; /* Darker on hover */ }
+
+/* Loading indicator style */
+.profile-container .loading {
+  font-size: 1.2rem;
+  color: var(--profile-text-medium);
+  text-align: center;
+  padding: 40px;
+}
+
+/* Keyframes are global */
+@keyframes profileFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) { /* Adjusted breakpoint */
+  .profile-container { padding: 20px 15px; } /* Less horizontal padding */
+  .profile-container .profile-card { padding: 1.5rem; } /* Less padding on card */
+
+  .profile-container .profile-image { /* View mode image */
+    width: 100px;
+    height: 100px;
+  }
+  .profile-container .user-info h2 { font-size: 1.5rem; } /* Smaller name */
+  .profile-container .user-info p {
+    font-size: 0.9rem;
+    flex-direction: column; /* Stack label/value */
+    gap: 3px;
+    align-items: flex-start;
+  }
+  .profile-container .user-info p strong { min-width: auto; } /* Remove min-width for stacking */
+
+  .profile-container .logout-btn,
+  .profile-container .edit-trigger-btn { font-size: 0.9rem; padding: 9px 16px; }
+
+  .profile-container .edit-card { padding: 1.5rem; max-width: 95%; } /* Adjust edit card padding */
+  .profile-container .edit-card h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+
+  .profile-container .image-controls { /* Center image/buttons column on small screens */
+      flex-direction: column;
+      gap: 15px;
+  }
+  .profile-container .image-buttons { /* Center buttons below image */
+     flex-direction: row; /* Side-by-side again if space allows */
+     justify-content: center;
+     width: 100%;
+  }
+   .profile-container .profile-image-preview { /* Edit preview image */
+       width: 90px;
+       height: 90px;
+   }
+
+  .profile-container .form-actions { flex-direction: column; gap: 0.75rem; } /* Stack save/cancel buttons */
+  .profile-container .save-btn,
+  .profile-container .cancel-btn { font-size: 0.95rem; padding: 10px; }
+}

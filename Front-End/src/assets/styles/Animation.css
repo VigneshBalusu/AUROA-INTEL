@@ -1,0 +1,238 @@
+/* Logo Animation Container */
+.logo-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(90deg, #0f0f0f, #1e1e1e); /* Gradient background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it stays on top */
+  animation: fadeOut 3s ease-in-out forwards; /* Smooth fade-out */
+}
+
+/* Logo Box with Animated Border */
+.logo-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 320px; 
+  height: 320px; 
+  border-radius: 50%;
+  position: relative;
+  animation: rotateBorder 3s linear infinite; /* Continuous border rotation */
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3); /* Outer glow effect */
+}
+
+/* Logo Image */
+.logo {
+  width: 80%; 
+  max-width: 250px; 
+  border-radius: 50%;
+  animation: logoExpand 1.5s ease-in-out, moveToCorner 1s 1.5s ease-in-out forwards;
+}
+
+/* Logo Expand Animation */
+@keyframes logoExpand {
+  from {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  to {
+    transform: scale(1.8); /* Slightly expand */
+    filter: brightness(1.5); /* Brighten effect */
+  }
+}
+
+/* Move Logo to Top-Right Corner */
+@keyframes moveToCorner {
+  from {
+    transform: translate(0, 0) scale(1.8);
+  }
+  to {
+    transform: translate(40vw, -25vh) scale(1); /* Move to top-right */
+  }
+}
+
+/* Rotating Border Animation */
+/* @keyframes rotateBorder {
+  0% {
+    border: 6px solid #ff6f61; Initial color
+  }
+  50% {
+    border: 6px solid #6a89cc; Midpoint color
+  }
+  100% {
+    border: 6px solid #ff6f61; Return to initial
+    transform: rotate(360deg);
+  }
+} */
+
+/* Smooth Fade-Out for Container */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Restore Scrollbars After Animation */
+body {
+  overflow: auto; 
+}
+
+/* Animation Container */
+.animation-container {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Fade In Animation */
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide In Animation */
+.slide-in {
+  animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Bounce Animation */
+.bounce {
+  animation: bounce 0.5s ease forwards;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Pulse Animation */
+.pulse {
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Shake Animation */
+.shake {
+  animation: shake 0.5s ease forwards;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Chat Message Animations */
+.chat-card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sidebar Animation */
+.sidebar {
+  transition: transform 0.3s ease;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+/* Logo Animation */
+.logo-container {
+  transition: opacity 0.3s ease;
+}
+
+.logo-container.hidden {
+  opacity: 0;
+}
+
+/* Greeting Animation */
+.greeting-container {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Input Container Animation */
+.input-container {
+  animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

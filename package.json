@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "compromise": "^14.14.4",
+    "crypto": "^1.0.1",
+    "express-session": "^1.18.1",
+    "multer": "^1.4.5-lts.2",
+    "natural": "^8.0.1",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

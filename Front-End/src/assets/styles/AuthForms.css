@@ -1,0 +1,331 @@
+/* src/assets/styles/AuthForms.css */
+/* Shared styles for Login, SignUp, ForgotPassword, ResetPassword */
+
+/* Import Font (Optional - Ensure linked elsewhere if removed here) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* --- Base Container (Common Wrapper) --- */
+.auth-container, /* Use this class for ForgotPassword, ResetPassword */
+.login-container,  /* Keep existing for Login */
+.signup-container /* Keep existing for SignUp */ {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+  /* Use a consistent background */
+  background: linear-gradient(115deg, #ff8a65, #6a89cc); /* Indigo/Violet Light Gradient */
+  padding: 30px 15px; /* Padding for smaller viewports */
+  box-sizing: border-box;
+  position: relative; /* Needed for fixed feedback card positioning */
+  font-family: 'Poppins', sans-serif;
+}
+
+/* --- Form Card Styling (Main white box) --- */
+.auth-form,    /* Use this class for ForgotPassword, ResetPassword forms */
+.login-card,   /* Keep existing for Login */
+.signup-form { /* Keep existing for SignUp */
+  background: #ffffff;
+  padding: 40px 45px;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1); /* Slightly softer shadow */
+  width: 100%;
+  max-width: 420px; /* Consistent max width */
+  display: flex;
+  flex-direction: column;
+  color: #111827;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+  border: 1px solid #e5e7eb;
+  animation: authFormFadeIn 0.5s ease-out forwards;
+}
+
+@keyframes authFormFadeIn {
+  from { opacity: 0; transform: translateY(15px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- Form Title --- */
+.form-title { /* Common title class */
+  text-align: center;
+  margin: 0 0 30px 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4338ca; /* Consistent primary color */
+}
+
+/* --- Form Description (Used in Forgot/Reset) --- */
+.form-description {
+  text-align: center;
+  margin: -15px 0 25px 0; /* Adjust spacing */
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+.form-description.error-text { /* Specific style for error descriptions */
+    color: #9f1239; /* Match failure color */
+    font-weight: 500;
+}
+
+
+/* --- Form Groups (Label + Input wrapper) --- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 7px;
+  font-size: 0.9rem;
+  color: #374151; /* Slightly darker label */
+}
+
+/* Label Row used in Login for label + forgot link */
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 7px;
+}
+.label-row label { margin-bottom: 0; } /* Reset margin for label inside row */
+
+/* --- Input Fields --- */
+/* Style all common input types */
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"],
+.auth-form input[type="tel"],    /* Added for phone in Profile */
+.auth-form input[type="date"],   /* Added for dob in Profile */
+.login-card input[type="email"],
+.login-card input[type="password"],
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+  padding: 11px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  width: 100%;
+  color: #1f2937;
+  background-color: #f9fafb;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+}
+
+/* Common Focus Styles */
+.auth-form input[type="text"]:focus,
+.auth-form input[type="email"]:focus,
+.auth-form input[type="password"]:focus,
+.auth-form input[type="tel"]:focus,
+.auth-form input[type="date"]:focus,
+.login-card input[type="email"]:focus,
+.login-card input[type="password"]:focus,
+.signup-form input[type="text"]:focus,
+.signup-form input[type="email"]:focus,
+.signup-form input[type="password"]:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* Common Placeholder Styles */
+.auth-form input::placeholder,
+.login-card input::placeholder,
+.signup-form input::placeholder {
+  color: #9ca3af;
+}
+
+/* Common Disabled Styles */
+.auth-form input:disabled,
+.login-card input:disabled,
+.signup-form input:disabled {
+  background-color: #e5e7eb;
+  cursor: not-allowed;
+}
+
+/* --- Password Input Container & Toggle Button --- */
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+/* Ensure inputs within take up space */
+.password-container input {
+   flex-grow: 1; /* Allow input to grow */
+   padding-right: 50px !important; /* Space for button */
+}
+.toggle-btn {
+  position: absolute;
+  right: 1px; top: 1px; bottom: 1px;
+  width: 45px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid #e5e7eb;
+  padding: 0; margin: 0;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 1.2rem; /* Size for icons */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.toggle-btn:hover:not(:disabled) { background-color: #f3f4f6; color: #4f46e5; }
+.toggle-btn:focus-visible { outline: 2px solid rgba(99, 102, 241, 0.4); outline-offset: 1px; }
+.toggle-btn:disabled { cursor: not-allowed; color: #9ca3af; }
+
+/* --- Submit Button (Common Styling) --- */
+.submit-btn,  /* Class used in SignUp, ForgotPassword, ResetPassword */
+.submit-btns /* Class used in Login */ {
+  display: block; width: 100%;
+  padding: 12px 20px;
+  border: none;
+  /* Consistent Gradient */
+  background: linear-gradient(90deg, #818cf8, #6366f1);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 25px; /* Pill shape */
+  cursor: pointer;
+  margin-top: 25px;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+  transition: all 0.2s ease; /* Combine transitions */
+  font-family: inherit;
+}
+.submit-btn:hover:not(:disabled),
+.submit-btns:hover:not(:disabled) {
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.3);
+  transform: translateY(-2px);
+}
+.submit-btn:active:not(:disabled),
+.submit-btns:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+.submit-btn:disabled,
+.submit-btns:disabled {
+  background: #c7d2fe;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- Redirect Text & Links --- */
+.redirect-text {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+/* Common link style */
+.link {
+  color: #4f46e5;
+  cursor: pointer;
+  font-weight: 600; /* Make links slightly bolder */
+  text-decoration: none;
+  transition: color 0.2s ease;
+  padding: 2px 0; /* Slight vertical padding for easier clicking */
+  margin: 0 3px; /* Small horizontal margin */
+}
+.link:hover,
+.link:focus-visible {
+  color: #3730a3;
+  text-decoration: underline;
+  outline: none;
+}
+/* Specific link style in Login for forgot password */
+.forgot-password-link {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* --- Feedback Card (Common Fixed Styling) --- */
+.feedback-card {
+  position: fixed;
+  top: -100px; /* Start hidden above */
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 280px;
+  max-width: 90%; /* Responsive max width */
+  width: fit-content; /* Adjust to content */
+  padding: 14px 25px;
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.18);
+  z-index: 1010; /* Ensure above form cards */
+  text-align: center;
+  font-size: 0.95rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, top 0.45s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  box-sizing: border-box;
+  border: 1px solid transparent;
+}
+.feedback-card.show { opacity: 1; visibility: visible; top: 30px; height: 80px;}
+.feedback-card.success { background-color: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
+.feedback-card.failure, .feedback-card.error { background-color: #fff1f2; color: #9f1239; border-color: #ffcbd1; }
+.feedback-card.info { background-color: #eff6ff; color: #1e40af; border-color: #bfdbfe; }
+.feedback-card .link { font-weight: 600; } /* Make embedded links slightly bolder */
+
+
+/* --- OTP Form Specific Styles --- */
+.otp-info-text { text-align: center; margin: 5px 0 25px 0; font-size: 0.95rem; color: #374151; line-height: 1.5; }
+.otp-info-text strong { color: #1f2937; font-weight: 600; }
+.otp-input-group { margin-bottom: 15px; }
+.otp-input-group label { font-weight: 600; text-align: center; display: block; margin-bottom: 10px; }
+.otp-input-field { /* Applied via className in JSX */
+  font-size: 1.8rem; text-align: center; letter-spacing: 5px; font-weight: 500; padding: 10px;
+  background-color: #ffffff; border: 1px solid #9ca3af;
+  /* Inherits base input styles */
+}
+.otp-input-field:focus { border-color: #4338ca; box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.2); }
+.otp-timer-section { text-align: center; margin: 20px 0; min-height: 2em; display: flex; flex-direction: column; align-items: center; }
+.otp-timer-section p { font-size: 0.9rem; color: #4b5563; margin-bottom: 8px; }
+.resend-otp-btn { /* Applied via className */
+  font-size: 0.9rem; background: none; border: none; padding: 4px 8px; border-radius: 4px;
+  transition: background-color 0.2s ease;
+  /* Inherits .link styles */
+}
+.resend-otp-btn:disabled { color: #9ca3af; cursor: not-allowed; text-decoration: none; background: none; }
+.resend-otp-btn:hover:not(:disabled) { background-color: #e0e7ff; }
+.small-text { font-size: 0.85rem; margin-top: 10px; } /* Used for Go Back link */
+
+
+/* --- Success Display Styles (In Signup) --- */
+.success-display { text-align: center; padding: 40px 20px; height: 40px; }
+.success-display .form-title.success-title { color: #16a34a; font-size: 2rem; margin-bottom: 15px; }
+.success-display .success-text { font-size: 1.1rem; color: #374151; margin-bottom: 10px; line-height: 1.6; }
+.success-display .submit-btn {
+  background: linear-gradient(90deg, #34d399, #10b981);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  margin-top: 30px;
+}
+.success-display .submit-btn:hover { background: linear-gradient(90deg, #10b981, #059669); box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35); }
+
+
+/* --- Responsive Design --- */
+@media (max-width: 500px) {
+  .auth-container, .login-container, .signup-container { padding: 25px 10px; }
+  .auth-form, .login-card, .signup-form { padding: 30px 20px; max-width: 95%; border-radius: 12px; }
+  .form-title { font-size: 1.5rem; margin-bottom: 25px; }
+  .form-group { margin-bottom: 16px; }
+  /* Adjust input sizes */
+  .auth-form input[type="text"], .auth-form input[type="email"], .auth-form input[type="password"],
+  .login-card input[type="email"], .login-card input[type="password"],
+  .signup-form input[type="text"], .signup-form input[type="email"], .signup-form input[type="password"] {
+    font-size: 0.9rem; padding: 10px 12px;
+  }
+  .toggle-btn { width: 40px; font-size: 1.1rem; }
+  .submit-btn, .submit-btns { font-size: 0.95rem; padding: 11px 15px; }
+  .redirect-text { font-size: 0.85rem; margin-top: 20px;}
+  .otp-input-field { font-size: 1.4rem; letter-spacing: 4px;}
+  .feedback-card { max-width: calc(100% - 30px); font-size: 0.9rem; padding: 12px 20px;height: 40px;}
+}

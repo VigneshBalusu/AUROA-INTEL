@@ -1,0 +1,70 @@
+/* src/assets/styles/PreviewCard.module.css */
+
+.previewCard {
+    position: fixed; /* Use fixed positioning relative to viewport */
+    background-color: #2d333b; /* Slightly lighter than main background */
+    color: #e0e0e0;
+    border: 1px solid #4f586a;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    padding: 10px 12px;
+    width: 200px; /* Adjust width as needed */
+    max-height: 180px; /* Limit height */
+    overflow: hidden; /* Hide overflow initially */
+    z-index: 1050; /* High z-index to be on top */
+    font-size: 0.8rem;
+    opacity: 0; /* Start hidden */
+    transform: translateY(10px); /* Start slightly below */
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    pointer-events: none; /* Prevent interaction until visible */
+  }
+  
+  /* Add this class via React state when visible */
+  /* We won't add this directly, visibility controlled by rendering */
+  /* Instead, rely on conditional rendering and transition */
+  .previewCard:global(.visible) { /* Example if needed, but conditional render is better */
+     opacity: 1;
+     transform: translateY(0);
+     pointer-events: auto; /* Allow interaction when visible */
+  }
+  
+  
+  .previewTitle {
+    margin: 0 0 8px 0;
+    padding-bottom: 5px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ccd6f6;
+    border-bottom: 1px solid #4f586a;
+  }
+  
+  .previewList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 120px; /* Limit list height */
+    overflow-y: auto; /* Add scroll if list is long */
+  }
+  
+  /* Optional scrollbar styling */
+  .previewList::-webkit-scrollbar { width: 4px; }
+  .previewList::-webkit-scrollbar-track { background: transparent; }
+  .previewList::-webkit-scrollbar-thumb { background-color: #6b7280; border-radius: 2px; }
+  
+  .previewItem {
+    padding: 4px 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #adb5bd;
+    border-bottom: 1px solid #3a4049; /* Very subtle separator */
+  }
+  .previewItem:last-child {
+      border-bottom: none;
+  }
+  
+  .previewItemEmpty {
+      color: #7a7d83;
+      font-style: italic;
+       padding: 4px 2px;
+  }

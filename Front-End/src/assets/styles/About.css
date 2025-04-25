@@ -1,0 +1,170 @@
+/* Localized About Page Background */
+.about-page {
+  background: linear-gradient(90deg, #ff6f61, #6a89cc);
+  min-height: 600vh;
+  overflow-x: auto;
+  overflow-y: auto;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  display: block;
+  height: 100vh;
+}
+
+/* Scoped About Container */
+.about-page .about {
+  width: 100%;
+  height: 100%;
+}
+
+/* Scoped About Title */
+ .about-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+  color: white;
+  position: fixed;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #ff6f61, #6a89cc);
+
+}
+
+/* Scoped Card Container */
+.about-page .cards-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Scoped Card Styling */
+.about-page .about-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 800px;
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  z-index: 5;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  color:#ff6f61
+}
+
+/* Scoped Active Card */
+.about-page .about-card.active {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  z-index: 10;
+}
+
+/* Scoped Inactive Card */
+.about-page .about-card:not(.active) {
+  transform: translate(-50%, 70%) scale(0.85);
+  opacity: 0.3;
+}
+
+/* Scoped Media */
+.about-page .card-media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Scoped Card Content */
+.about-page .card-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+  color:linear-gradient(90deg, #ff6f61, #6a89cc);
+  text-align: center;
+  margin-top: 40%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 1);
+}
+
+/* Scoped Headings */
+.about-page .card-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Scoped Paragraphs */
+.about-page .card-content p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Scoped Icon Container */
+.about-page .icons {
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* Scoped Rope Effect */
+.about-page .rope {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  width: 12px;
+  height: 150px;
+  background: #fff;
+  transform: translateX(-50%);
+  animation: about-swing 2s ease-in-out infinite alternate;
+}
+
+/* Scoped Keyframes */
+@keyframes about-swing {
+  0% {
+    transform: translateX(-50%) rotate(-8deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(8deg);
+  }
+}
+
+/* Scoped Responsive Design */
+@media (max-width: 768px) {
+  .about-page .about-card {
+    width: 90%;
+    height: 400px;
+  }
+
+  .about-page .card-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .about-page .card-content p {
+    font-size: 1rem;
+  }
+
+  .about-page .rope {
+    width: 8px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page .about-card {
+    height: 300px;
+  }
+
+  .about-page .card-content h2 {
+    font-size: 1.3rem;
+  }
+
+  .about-page .card-content p {
+    font-size: 0.9rem;
+  }
+
+  .about-page .rope {
+    height: 80px;
+  }
+}
