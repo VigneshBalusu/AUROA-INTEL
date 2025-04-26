@@ -47,6 +47,8 @@ dotenv.config(); // Load environment variables
 const remoteLogoutTokens = new Map(); // For single-use remote logout links
 const otpStore = new Map();          // For signup OTP verification
 
+
+
 // --- Cloudinary Configuration ---
 try {
     if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
@@ -66,7 +68,9 @@ try {
 // --- Express App Initialization ---
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
+console.log(`[CORS Check] Raw process.env.FRONTEND_URL: ${process.env.FRONTEND_URL}`); // Log raw value
+console.log(`[CORS Check] Allowed Origin determined as: ${allowedOrigin}`); // Log the value used
 // --- MongoDB Connection ---
 const connectDB = async () => {
   try {
