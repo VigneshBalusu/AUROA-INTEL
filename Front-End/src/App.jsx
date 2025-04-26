@@ -5,12 +5,9 @@ import Entry from "./components/Entry";
 import Navigation from "./components/Navigation"; // Navigation contains the main app routes
 import Animation from "./components/Animation";
 
-// No need to import specific page components here (Login, Home, etc.)
-// as Navigation is responsible for rendering them based on the path.
-
 function App() {
   // State for the entry animation
-  const [showAnimation, setShowAnimation] = useState(false);
+  const [showAnimation, setShowAnimation] = useState(true);
 
   // ★ Centralized Login State ★
   // Initialize state from localStorage to persist login status across refreshes
@@ -27,15 +24,11 @@ function App() {
     // Listen for storage changes in other tabs/windows
     window.addEventListener('storage', handleStorageChange);
 
-    // Optional: Initial check in case the token changed before this component mounted
-    // handleStorageChange(); // Can sometimes cause double-renders, useState initializer is often sufficient
-
     // Cleanup listener on component unmount
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []); // Empty dependency array ensures this runs only once on mount/unmount
-
 
   return (
     <BrowserRouter>
@@ -65,7 +58,7 @@ function App() {
               isLoggedIn={isLoggedIn}
               setIsLoggedIn={setIsLoggedIn} // Pass the setter function
             />
-           }
+          }
         />
       </Routes>
     </BrowserRouter>
