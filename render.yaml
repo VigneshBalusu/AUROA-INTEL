@@ -48,7 +48,8 @@ services:
     envVars:
       - key: VITE_API_BASE_URL      # For frontend code to call the backend
         # <<< VALUE MUST MATCH YOUR BACKEND URL >>>
-        value: https://AUROA-INTEL.onrender.com
+        # --- CORRECTED VALUE BELOW ---
+        value: https://AUROA-INTEL-Back-End.onrender.com
     routes:
       # Rewrite rule for SPA (React Router) routing
       - type: rewrite
