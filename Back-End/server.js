@@ -87,7 +87,7 @@ connectDB();
 // --- Core Middleware ---
 // app.use(helmet()); // Security headers
 app.use(cors({
-    origin: '*', // Allow ANY origin for testing
+    origin: allowedOrigin, // Allow ANY origin for testing
     credentials: true, // May need to set to false with '*'
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
