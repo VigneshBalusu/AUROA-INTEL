@@ -86,11 +86,11 @@ connectDB();
 
 // --- Core Middleware ---
 // app.use(helmet()); // Security headers
-app.use(cors({ // Enable Cross-Origin Resource Sharing
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Restrict in production
-    credentials: true, // Allow cookies/auth headers
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+app.use(cors({
+    origin: '*', // Allow ANY origin for testing
+    credentials: true, // May need to set to false with '*'
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(express.json({ limit: '5mb' })); // Parse JSON request bodies (limit size)
 app.use(express.urlencoded({ extended: true, limit: '5mb' })); // Parse URL-encoded bodies
