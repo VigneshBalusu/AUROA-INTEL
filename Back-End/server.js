@@ -85,7 +85,7 @@ const connectDB = async () => {
 connectDB();
 
 // --- Core Middleware ---
-app.use(helmet()); // Security headers
+// app.use(helmet()); // Security headers
 app.use(cors({ // Enable Cross-Origin Resource Sharing
     origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Restrict in production
     credentials: true, // Allow cookies/auth headers
